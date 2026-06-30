@@ -1,0 +1,64 @@
+[4:42 am, 01/07/2026] Jn9: name: bg_remover_pro
+description: "AI Photo & Video Background Remover - heavy feature app"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mobile_ads: ^5.1.0
+  image_picker: ^1.1.2
+  camera: ^0.11.0
+  google_mlkit_selfie_segmentation: ^0.10.0
+  image: ^4.2.0
+  flutter_image_compress: ^2.3.0
+  video_player: ^2.9.2
+  ffmpeg_kit_flutter_new: ^1.6.0
+  video_thumbnail: ^0.5.3
+  path_provider: ^2.1.4
+  gallery_saver_plus: ^3.2.4
+  shared_preferences: ^2.3.2
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  before_after: ^3.1.2
+  flutter_colorpicker: ^1.1.0
+  share_plus: ^10.0.2
+  permission_handler: ^11.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+[4:45 am, 01/07/2026] Jn9: codemagic.yaml
+[4:45 am, 01/07/2026] Jn9: workflows:
+  android-workflow:
+    name: BG Remover Pro - Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+    scripts:
+      - name: Unzip project files
+        script: |
+          unzip -o *.zip -d .
+      - name: Get Flutter packages
+        script: |
+          cd bg_remover_app && flutter pub get
+      - name: Build APK
+        script: |
+          cd bg_remover_app && flutter build apk --release
+    artifacts:
+      - bg_remover_app/build/app/outputs/flutter-apk/*.apk
+    publishing:
+      email:
+        recipients:
+          - meharjasim15@gmail.com
+        notify:
+          success: true
+          failure: true
